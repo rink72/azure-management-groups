@@ -32,5 +32,5 @@ jobs:
           state_resource_group: ${{ secrets.STATE_RESOURCE_GROUP }}
           state_storage_account: ${{ secrets.STATE_STORAGE_ACCOUNT }}
           state_container: ${{ secrets.STATE_CONTAINER }}
-          state_key: azure-service-principals/prod.tfstate
+          state_key: azure-management-groups/prod.tfstate
 
