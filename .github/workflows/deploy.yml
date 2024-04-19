@@ -1,0 +1,33 @@
+name: Deploy - Azure management groups
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  prod:
+    name: PROD
+    environment: prod
+    concurrency: prod
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy management groups
+        uses: ./.github/actions/azure-terraform-action
+        with:
+          action: apply
+          path: infrastructure
+          client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          state_subscription_id: ${{ secrets.STATE_SUBSCRIPTION_ID }}
+          state_resource_group: ${{ secrets.STATE_RESOURCE_GROUP }}
+          state_storage_account: ${{ secrets.STATE_STORAGE_ACCOUNT }}
+          state_container: ${{ secrets.STATE_CONTAINER }}
+          state_key: azure-service-principals/prod.tfstate
+
